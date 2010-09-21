@@ -27,6 +27,7 @@
 	}
 }
 
+
 - (void)ProjectTree_windowDidLoad
 {
 	[self ProjectTree_windowDidLoad];
@@ -36,11 +37,26 @@
 
 	[[self valueForKey:@"outlineView"] reloadData];
 
+	NSOutlineView *outlineView = [self valueForKey:@"outlineView"];
+	[outlineView setIntercellSpacing:NSMakeSize(4, 6)];
+	
+	/* TODO: Figure out how to adjust the positioning of the subviews of the project view.
+	The project view appears to contain the outline view and the four buttons aligned underneath the view. */
+
+	// TODO: Figure out a more straightforward way to access the project view.
+	NSView *projectView = [[[outlineView superview] superview] superview];
+
+	// NSArray *array = [projectView subviews];
+	// for(unsigned int i = 0; i < [array count]; i += 1)
+	// {
+	// 	id object = [array objectAtIndex:i];
+	// }
+	
+	
 	NSDictionary *treeState = [[NSDictionary dictionaryWithContentsOfFile:[self valueForKey:@"filename"]] objectForKey:@"treeState"];
 	if(treeState)
 	{
 		NSArray *rootItems         = [self valueForKey:@"rootItems"];
-		NSOutlineView *outlineView = [self valueForKey:@"outlineView"];
 		[self expandItems:rootItems inOutlineView:outlineView toState:treeState];
 	}
 }
