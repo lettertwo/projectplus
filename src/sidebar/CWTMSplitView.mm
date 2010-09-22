@@ -42,10 +42,11 @@
 	// [super drawDividerInRect:rect];
 }
 
-// - (float)dividerThickness
-// {
-//     return 8;
-// }
+- (float)dividerThickness
+{
+	return 1;
+    //return 8;
+}
 
 - (BOOL)sideBarOnRight;
 {

@@ -46,11 +46,21 @@
 	// TODO: Figure out a more straightforward way to access the project view.
 	NSView *projectView = [[[outlineView superview] superview] superview];
 
-	// NSArray *array = [projectView subviews];
-	// for(unsigned int i = 0; i < [array count]; i += 1)
-	// {
-	// 	id object = [array objectAtIndex:i];
-	// }
+	NSArray *array = [projectView subviews];
+	for(unsigned int i = 0; i < [array count]; i += 1)
+	{
+// 		id object = [array objectAtIndex:i];
+// 		
+// 		NSRect frame = [object frame];
+// 		
+// NSLog(@">>> %@", frame);
+		
+// [frame setOrigin:NSMakePoint([[frame origin] x] + 100, [[frame origin] y])];
+// NSPoint origin = NSMakePoint(100, 100);
+// [frame setOrigin:origin];
+// [object setFrame:frame];
+
+	}
 	
 	
 	NSDictionary *treeState = [[NSDictionary dictionaryWithContentsOfFile:[self valueForKey:@"filename"]] objectForKey:@"treeState"];
