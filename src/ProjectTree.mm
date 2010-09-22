@@ -27,6 +27,20 @@
 	}
 }
 
+static int compareFrameOriginX(id viewA, id viewB, void *context)
+{
+    float v1 = [viewA frame].origin.x;
+    float v2 = [viewB frame].origin.x;
+
+	if (v1 < v2) {
+        return NSOrderedAscending;
+	} else if (v1 > v2) {
+        return NSOrderedDescending;
+	}
+
+	return NSOrderedSame;
+}
+
 
 - (void)ProjectTree_windowDidLoad
 {
@@ -38,30 +52,70 @@
 	[[self valueForKey:@"outlineView"] reloadData];
 
 	NSOutlineView *outlineView = [self valueForKey:@"outlineView"];
-	[outlineView setIntercellSpacing:NSMakeSize(4, 6)];
-	
-	/* TODO: Figure out how to adjust the positioning of the subviews of the project view.
-	The project view appears to contain the outline view and the four buttons aligned underneath the view. */
-
-	// TODO: Figure out a more straightforward way to access the project view.
 	NSView *projectView = [[[outlineView superview] superview] superview];
-
-	NSArray *array = [projectView subviews];
-	for(unsigned int i = 0; i < [array count]; i += 1)
-	{
-// 		id object = [array objectAtIndex:i];
-// 		
-// 		NSRect frame = [object frame];
-// 		
-// NSLog(@">>> %@", frame);
-		
-// [frame setOrigin:NSMakePoint([[frame origin] x] + 100, [[frame origin] y])];
-// NSPoint origin = NSMakePoint(100, 100);
-// [frame setOrigin:origin];
-// [object setFrame:frame];
-
-	}
+	NSScrollView *scrollView = nil;
 	
+	// Set background color.
+	// [outlineView setBackgroundColor: [NSColor lightGrayColor]];
+	
+	// TODO: Hide border on scroll view.
+	// TODO: Draw custom border only on right and bottom.
+	// TODO: Remove resize divider.
+	// TODO: Add resize handle.
+
+
+    // Gather buttons
+    NSMutableArray *btns = [[NSMutableArray alloc] init];
+	NSArray *subviews = [projectView subviews];
+	for (unsigned int i = 0; i < [subviews count]; i++) {
+        id aView = [subviews objectAtIndex:i];
+        if ([aView isKindOfClass:[NSButton class]] && [aView frame].origin.y < 1)
+		{
+            [btns addObject:aView];
+        } 
+		else if ([aView isKindOfClass:[NSScrollView class]])
+		{
+            scrollView = (NSScrollView *)aView;
+        }
+    }
+	
+ 	[btns sortUsingFunction:compareFrameOriginX context:nil];
+	
+	// Adjust outlineView frame
+    if (scrollView)
+	{
+		NSRect aRect = [scrollView frame];
+		aRect.origin.x -= 1;
+		aRect.origin.y -= 8;
+		aRect.size.width += 1;
+		aRect.size.height += 9;
+        [scrollView setFrame:aRect];
+		
+        NSOutlineView *realOutlineView = [scrollView documentView];
+        NSFont *font = [NSFont fontWithName:@"Lucida Grande" size:12];
+        NSLayoutManager *layoutManager = [NSLayoutManager new]; 
+        [realOutlineView setRowHeight:[layoutManager defaultLineHeightForFont:font]];
+        [layoutManager release];
+        [realOutlineView setIntercellSpacing:NSMakeSize (6.0, 4.0)];
+        [realOutlineView reloadData];
+    }
+	
+	// Arrange buttons
+	float nx = -1;
+	for (unsigned int i = 0; i < [btns count]; i++)
+	{
+		NSView *button = [btns objectAtIndex:i];
+		NSRect buttonFrame = [button frame];
+		buttonFrame.origin.x = nx;
+		buttonFrame.origin.y -= 1;
+		buttonFrame.size.height -= 4;
+		nx += buttonFrame.size.width - 1;
+		
+		[button setAutoresizingMask:NSViewMaxXMargin];
+		[button setFrame:buttonFrame];
+	}
+    [btns release];
+
 	
 	NSDictionary *treeState = [[NSDictionary dictionaryWithContentsOfFile:[self valueForKey:@"filename"]] objectForKey:@"treeState"];
 	if(treeState)

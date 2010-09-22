@@ -24,9 +24,15 @@
 - (void)drawDividerInRect:(NSRect)rect
 {
 	if ([self isVertical])
+	{
 		return;
+	}
 	else
+	{
 		[super drawDividerInRect:rect];
+	}
+
+
 	// if([self isVertical])
 	// {
 	// 	NSRect fromRect;
