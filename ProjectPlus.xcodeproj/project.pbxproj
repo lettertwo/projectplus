@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7412E93212665B0C00D71E1E /* ResizeHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 7412E93112665B0C00D71E1E /* ResizeHandle.m */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		911112540E5C8AF900BF76B4 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 911112530E5C8AF900BF76B4 /* Sparkle.framework */; };
 		9111129C0E5C8D9000BF76B4 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 911112530E5C8AF900BF76B4 /* Sparkle.framework */; };
@@ -68,6 +69,8 @@
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		7412E93012665B0C00D71E1E /* ResizeHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResizeHandle.h; sourceTree = "<group>"; };
+		7412E93112665B0C00D71E1E /* ResizeHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResizeHandle.m; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* ProjectPlus.tmplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProjectPlus.tmplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		911112530E5C8AF900BF76B4 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		91280AC70E4606B700B7ED82 /* libsvn_wc-1.0.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libsvn_wc-1.0.0.0.dylib"; sourceTree = "<group>"; };
@@ -218,6 +221,8 @@
 				915AD4E80ED9E6AD0017679A /* sidebar */,
 				915AD5090ED9E7170017679A /* etc */,
 				915AD4D60ED9E6AD0017679A /* OpenWith.mm */,
+				7412E93012665B0C00D71E1E /* ResizeHandle.h */,
+				7412E93112665B0C00D71E1E /* ResizeHandle.m */,
 				915AD4D70ED9E6AD0017679A /* ProjectPlus.h */,
 				915AD4D80ED9E6AD0017679A /* ProjectPlus.mm */,
 				915AD4DA0ED9E6AD0017679A /* ProjectTree.mm */,
@@ -395,6 +400,7 @@
 				915AD5000ED9E6AD0017679A /* TMLabels.mm in Sources */,
 				915AD5010ED9E6AD0017679A /* Tooltips.mm in Sources */,
 				915AD5100ED9E7170017679A /* JRSwizzle.m in Sources */,
+				7412E93212665B0C00D71E1E /* ResizeHandle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

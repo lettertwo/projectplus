@@ -1,4 +1,5 @@
 #import "JRSwizzle.h"
+#import "ResizeHandle.h"
 
 @interface ProjectTree : NSObject
 + (BOOL)preserveTreeState;
@@ -41,29 +42,16 @@ static int compareFrameOriginX(id viewA, id viewB, void *context)
 	return NSOrderedSame;
 }
 
-
-- (void)ProjectTree_windowDidLoad
+- (void)ProjectTree_adjustLayout
 {
-	[self ProjectTree_windowDidLoad];
-
-	if(not [ProjectTree preserveTreeState])
-		return;
-
-	[[self valueForKey:@"outlineView"] reloadData];
-
 	NSOutlineView *outlineView = [self valueForKey:@"outlineView"];
 	NSView *projectView = [[[outlineView superview] superview] superview];
 	NSScrollView *scrollView = nil;
 	
-	// Set background color.
+	// TODO: Set background color.
+	// TODO: Add background color preference.
 	// [outlineView setBackgroundColor: [NSColor lightGrayColor]];
 	
-	// TODO: Hide border on scroll view.
-	// TODO: Draw custom border only on right and bottom.
-	// TODO: Remove resize divider.
-	// TODO: Add resize handle.
-
-
     // Gather buttons
     NSMutableArray *btns = [[NSMutableArray alloc] init];
 	NSArray *subviews = [projectView subviews];
@@ -101,6 +89,7 @@ static int compareFrameOriginX(id viewA, id viewB, void *context)
     }
 	
 	// Arrange buttons
+	// TODO: Handle sidebar on right case.
 	float nx = -1;
 	for (unsigned int i = 0; i < [btns count]; i++)
 	{
@@ -116,7 +105,34 @@ static int compareFrameOriginX(id viewA, id viewB, void *context)
 	}
     [btns release];
 
+	// Add resize handle.
+	ResizeHandle *resizeHandle = [[ResizeHandle alloc] initWithView: projectView];
 	
+	NSRect handleRect = [resizeHandle frame];
+
+	// TODO: Handle sidebar on right case.
+	handleRect.origin.x = [projectView frame].size.width - handleRect.size.width;
+
+	[resizeHandle setAutoresizingMask:NSViewMinXMargin];
+	[resizeHandle setFrame:handleRect];
+	
+	// TODO: Handle sidebar on right case?
+	[projectView addSubview:resizeHandle];
+	[projectView setNeedsDisplay:YES];
+	[projectView setAutoresizingMask:(NSViewWidthSizable + NSViewMaxYMargin)];
+
+}
+
+- (void)ProjectTree_windowDidLoad
+{
+	[self ProjectTree_windowDidLoad];
+	[self ProjectTree_adjustLayout];
+	NSOutlineView *outlineView = [self valueForKey:@"outlineView"];
+	[outlineView reloadData];
+	
+	if(not [ProjectTree preserveTreeState])
+		return;
+
 	NSDictionary *treeState = [[NSDictionary dictionaryWithContentsOfFile:[self valueForKey:@"filename"]] objectForKey:@"treeState"];
 	if(treeState)
 	{
